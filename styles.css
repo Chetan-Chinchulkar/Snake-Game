@@ -1,0 +1,9 @@
+body{
+    background-color: #f2f2f2;
+    margin-left: 25%;
+}
+
+canvas{
+    background-image: url(assets/bg.jpg);
+    border: 25px solid green;
+}
