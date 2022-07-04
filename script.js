@@ -113,3 +113,34 @@ function update()
     snake.updateSnake();
 }
 
+function draw()
+{
+    pen.clearRect(0, 0, W, H);
+    snake.drawSnake();
+    pen.fillStyle = pen.color;
+    pen.drawImage(foodImg, food.x * cs, food.y * cs, cs, cs);
+    pen.drwaImage(trophyImg,18,20,cs,cs);
+    pen.fillStyle = "white";
+    pen.font = "20px Arial";
+    pen.fillText("Score: " + score, W - 100, H - 10);
+
+}
+
+function gameloop()
+{
+    if(gameOver)
+    {
+        clearInterval(f);
+        alert("Game Over! Your score is " + score);
+    }
+    draw();
+    update();
+    
+}
+
+
+init();
+
+
+
+var f = setInterval(gameloop,100);
