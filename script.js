@@ -15,13 +15,13 @@ function init()
 
     snake = {
         init_len: 3,
-        color: "red",
+        color: "black",
         cells: [],
-        direction: "right",
+        direction: "down",
 
         createSnake: function()
         {
-            for (var i = this.init_len; i > 0; i--)
+            for (var i = this.init_len; i >= 0; i--)
             {
                 this.cells.push({x: i, y: 0});
             }
@@ -31,7 +31,7 @@ function init()
         {
             for (var i = 0; i < this.cells.length; i++)
             {
-                pen.fillRect(this.cells[i].x * cs, this.cells[i].y * cs, cs, cs);
+                pen.fillRect(this.cells[i].x * cs, this.cells[i].y * cs, cs-2, cs-2);
             }
         },
 
@@ -74,32 +74,39 @@ function init()
             {
                 gameOver = true;
             }
+            // Game over condition when snake touches itself
+            for (var i = 1; i < this.cells.length; i++)
+            {
+                if (this.cells[0].x == this.cells[i].x && this.cells[0].y == this.cells[i].y)
+                {
+                    gameOver = true;
+                }
+            }
 
         }
     };
 
     function keyPressed(e)
     {
-        if (e.keyCode == "37" && this.direction != "right")
+        if ( (e.keyCode == "37"||e.key == "ArrowLeft") && this.direction != "right")
         {
-            this.direction = "left";
+            snake.direction = "left";
         }
-        else if (e.keyCode == "38" && this.direction != "down")
+        else if ( (e.keyCode == "38"||e.key == "ArrowUp") && snake.direction != "down")
         {
-            this.direction = "up";
+            snake.direction = "up";
         }
-        else if (e.keyCode == "39" && this.direction != "left")
+        else if ( (e.keyCode == "39"||e.key == "ArrowRight") && snake.direction != "left")
         {
-            this.direction = "right";
+            snake.direction = "right";
         }
-        else if (e.keyCode == "40" && this.direction != "up")
+        else if ((e.keyCode == "40"||e.key == "ArrowDown") && snake.direction != "up")
         {
-            this.direction = "down";
+            snake.direction = "down";
         }
     }
 
-
-    document.addEventListener("keydown", keyPressed);
+    document.addEventListener('keydown', keyPressed);
     snake.createSnake();
 }
 
@@ -125,7 +132,7 @@ function draw()
     pen.fillStyle = pen.color;
     pen.drawImage(foodImg, food.x * cs, food.y * cs, cs, cs);
     pen.drawImage(trophyImg,18,20,2.5*cs,2.5*cs);
-    pen.fillStyle = "blue";
+    pen.fillStyle = "red";
     pen.font = "20px Roboto";
     pen.fillText(score, 1.5*cs-3, 1.5*cs-15);
 
@@ -133,6 +140,7 @@ function draw()
 
 function gameloop()
 {
+    
     if(gameOver)
     {
         clearInterval(f);
@@ -140,12 +148,10 @@ function gameloop()
     }
     draw();
     update();
-
+    
 }
 
 
 init();
-
-
 
 var f = setInterval(gameloop,100);
