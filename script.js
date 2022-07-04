@@ -1,12 +1,17 @@
+cs = 66;
+foodImg = new Image();
+foodImg.src = "assets/food.png";
+trophyImg = new Image();
+trophyImg.src = "assets/trophy.png";
+
 function init()
 {
-    var canvas = document.getElementById("canvas");
-    W = H = canvas.height = canvas.weight = 1000;
+    var canvas = document.getElementById("myCanvas");
+    W = H = canvas.height = canvas.weight = 800;
     pen = canvas.getContext("2d");
     food = randomFoodGenerator(); //generate food
     gameOver = false;
     score = 0;
-    cs = 66;
 
     snake = {
         init_len: 3,
@@ -119,10 +124,10 @@ function draw()
     snake.drawSnake();
     pen.fillStyle = pen.color;
     pen.drawImage(foodImg, food.x * cs, food.y * cs, cs, cs);
-    pen.drwaImage(trophyImg,18,20,cs,cs);
-    pen.fillStyle = "white";
-    pen.font = "20px Arial";
-    pen.fillText("Score: " + score, W - 100, H - 10);
+    pen.drawImage(trophyImg,18,20,2.5*cs,2.5*cs);
+    pen.fillStyle = "blue";
+    pen.font = "20px Roboto";
+    pen.fillText(score, 1.5*cs-3, 1.5*cs-15);
 
 }
 
@@ -135,7 +140,7 @@ function gameloop()
     }
     draw();
     update();
-    
+
 }
 
 
