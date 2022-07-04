@@ -62,7 +62,14 @@ function init()
                     break;
             }
             this.cells.unshift(newHead);
-            this.cells.pop();
+            // this.cells.pop();
+
+            // Game Over Condition
+            if (this.cells[0].x < 0 || this.cells[0].x > W/cs || this.cells[0].y < 0 || this.cells[0].y > H/cs)
+            {
+                gameOver = true;
+            }
+
         }
     };
 
@@ -87,5 +94,22 @@ function init()
     }
 
 
-
+    document.addEventListener("keydown", keyPressed);
+    snake.createSnake();
 }
+
+function randomFoodGenerator()
+{
+    var food = {
+        x: Math.round(Math.random() * (W - cs) / cs),
+        y: Math.round(Math.random() * (H - cs) / cs),
+        color: "red"
+    };
+    return food;
+}
+
+function update()
+{
+    snake.updateSnake();
+}
+
