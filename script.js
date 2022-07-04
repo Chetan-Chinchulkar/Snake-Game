@@ -29,5 +29,63 @@ function init()
                 pen.fillRect(this.cells[i].x * cs, this.cells[i].y * cs, cs, cs);
             }
         },
+
+        updateSnake: function()
+        {
+            var headX = this.cells[0].x;
+            var headY = this.cells[0].y;
+            
+            if (headX == food.x && headY == food.y)
+            {
+                food = randomFoodGenerator();
+                score++;
+            }
+            else
+            {
+                this.cells.pop();
+            }
+            
+            var newHead = {x: headX, y: headY};
+            switch (this.direction)
+            {
+                case "right":
+                    newHead.x++;
+                    break;
+                case "left":
+                    newHead.x--;
+                    break;
+                case "up":
+                    newHead.y--;
+                    break;
+                case "down":
+                    newHead.y++;
+                    break;
+            }
+            this.cells.unshift(newHead);
+            this.cells.pop();
+        }
+    };
+
+    function keyPressed(e)
+    {
+        if (e.keyCode == "37" && this.direction != "right")
+        {
+            this.direction = "left";
+        }
+        else if (e.keyCode == "38" && this.direction != "down")
+        {
+            this.direction = "up";
+        }
+        else if (e.keyCode == "39" && this.direction != "left")
+        {
+            this.direction = "right";
+        }
+        else if (e.keyCode == "40" && this.direction != "up")
+        {
+            this.direction = "down";
+        }
     }
+
+
+
 }
